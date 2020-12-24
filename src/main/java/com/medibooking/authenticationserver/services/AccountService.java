@@ -26,22 +26,31 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
     private final AuthorityRepository authorityRepository;
+
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    public AccountGetDto createAccount(AccountPostDto accountPostDto){
+    public AccountGetDto createPatientAccount(AccountPostDto accountPostDto){
         Account account = accountMapper.toEntity(accountPostDto);
-        Set<Authority> authorities = Stream.of(authorityRepository.getOne(Long.valueOf(2))).collect(Collectors.toSet());
+        Set<Authority> authorities = Stream.of(authorityRepository.getOne(2L)).collect(Collectors.toSet());
         account.setAuthorities(authorities);
         Account dbAccount = accountRepository.save(account);
-        Patient patient = new Patient();
-        patient.setAccountId(dbAccount.getId());
-        patient.setFirstName(accountPostDto.getFirstName());
-        patient.setLastName(accountPostDto.getLastName());
-        patient.setAge(accountPostDto.getAge());
-        patient.setGender(accountPostDto.getGender());
-        rabbitTemplate.convertAndSend("Auth", patient);
+        patientSignUp(dbAccount.getId(),
+                accountPostDto.getFirstName(),
+                accountPostDto.getLastName(),
+                accountPostDto.getAge(),
+                accountPostDto.getGender());
         return accountMapper.fromEntity(dbAccount);
+    }
+
+    public void patientSignUp(Long accountId, String firstName, String lastName, int age, String gender){
+        Patient patient = new Patient();
+        patient.setAccountId(accountId);
+        patient.setFirstName(firstName);
+        patient.setLastName(lastName);
+        patient.setAge(age);
+        patient.setGender(gender);
+        rabbitTemplate.convertAndSend("PatientSignUp", patient);
     }
 
     public AccountGetDto findAccountByUsername(String username){
@@ -51,7 +60,7 @@ public class AccountService {
 
     public List<AccountGetDto> getAllAccounts(){
         return accountRepository.findAll().stream()
-                .map(account -> accountMapper.fromEntity(account))
+                .map(accountMapper::fromEntity)
                 .collect(Collectors.toList());
     }
 
@@ -65,7 +74,7 @@ public class AccountService {
         accountMapper.copy(accountPutDto, account);
         account.setId(accountId);
         account.setUsername(findUsernameById(accountId));
-        Set<Authority> authorities = Stream.of(authorityRepository.getOne(Long.valueOf(2))).collect(Collectors.toSet());
+        Set<Authority> authorities = Stream.of(authorityRepository.getOne(2L)).collect(Collectors.toSet());
         account.setAuthorities(authorities);
         return accountMapper.fromEntity(accountRepository.save(account));
     }

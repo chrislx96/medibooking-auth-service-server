@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.crypto.SecretKey;
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,7 +48,7 @@ public class AuthController {
             authGetDto.setAccountId(accountId);
             authGetDto.setGrantedAuthorities(grantedAuthorities);
         } catch (JwtException e) {
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok(authGetDto);
         }
         return ResponseEntity.ok(authGetDto);
     }
