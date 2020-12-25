@@ -10,8 +10,8 @@ import javax.persistence.Column;
 public class AccountPostDto {
     private String username;
     private String encodedPassword;
-    private int age;
-    private String gender;
-    private String firstName;
-    private String lastName;
+//    private int age;
+//    private String gender;
+//    private String firstName;
+//    private String lastName;
 }

@@ -6,6 +6,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AccountPutDto {
-    private Long id;
     private String encodedPassword;
 }
