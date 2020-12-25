@@ -32,8 +32,7 @@ public class AccountService {
 
     public AccountGetDto createPatientAccount(AccountPostDto accountPostDto){
         Account account = accountMapper.toEntity(accountPostDto);
-        Set<Authority> authorities = Stream.of(authorityRepository.getOne(2L)).collect(Collectors.toSet());
-        account.setAuthorities(authorities);
+        account.setAuthorities(getPatientAuthority());
         Account dbAccount = accountRepository.save(account);
         patientSignUp(dbAccount.getId(),
                 accountPostDto.getFirstName(),
@@ -41,6 +40,10 @@ public class AccountService {
                 accountPostDto.getAge(),
                 accountPostDto.getGender());
         return accountMapper.fromEntity(dbAccount);
+    }
+
+    public Set<Authority> getPatientAuthority(){
+        return Stream.of(authorityRepository.getOne(2L)).collect(Collectors.toSet());
     }
 
     public void patientSignUp(Long accountId, String firstName, String lastName, int age, String gender){

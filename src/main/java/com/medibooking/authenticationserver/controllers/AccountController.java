@@ -29,7 +29,10 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<AccountGetDto> add(@RequestBody AccountPostDto accountPostDto) {
-        AccountGetDto accountGetDto = accountService.createPatientAccount(accountPostDto);
+        AccountGetDto accountGetDto = new AccountGetDto();
+        if(accountService.findAccountByUsername(accountPostDto.getUsername()) == null){
+            accountGetDto = accountService.createPatientAccount(accountPostDto);
+        }
         return ResponseEntity.ok(accountGetDto);
     }
 
