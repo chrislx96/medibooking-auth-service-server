@@ -10,7 +10,7 @@ import com.medibooking.messages.Patient;
 import com.medibooking.authenticationserver.repositories.AccountRepository;
 import com.medibooking.authenticationserver.repositories.AuthorityRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+//import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final AuthorityRepository authorityRepository;
 
-    @Autowired
-    RabbitTemplate rabbitTemplate;
+//    @Autowired
+//    RabbitTemplate rabbitTemplate;
 
     public AccountGetDto createPatientAccount(AccountPostDto accountPostDto){
         Account account = accountMapper.toEntity(accountPostDto);
@@ -40,10 +40,6 @@ public class AccountService {
 //                accountPostDto.getAge(),
 //                accountPostDto.getGender());
         return accountMapper.fromEntity(dbAccount);
-    }
-
-    public Set<Authority> getPatientAuthority(){
-        return Stream.of(authorityRepository.getOne(2L)).collect(Collectors.toSet());
     }
 
 //    public void patientSignUp(Long accountId, String firstName, String lastName, int age, String gender){
@@ -77,8 +73,17 @@ public class AccountService {
         accountMapper.copy(accountPutDto, account);
         account.setId(accountId);
         account.setUsername(findUsernameById(accountId));
-        account.setAuthorities(getPatientAuthority());
+        account.setAuthorities(findAuthoritiesByAccountId(accountId));
         return accountMapper.fromEntity(accountRepository.save(account));
+    }
+
+    public Set<Authority> findAuthoritiesByAccountId(Long accountId){
+        Account account = accountRepository.getOne(accountId);
+        return account.getAuthorities();
+    }
+
+    public Set<Authority> getPatientAuthority(){
+        return Stream.of(authorityRepository.getOne(2L)).collect(Collectors.toSet());
     }
 
     public void deleteAccount(Long accountId){
