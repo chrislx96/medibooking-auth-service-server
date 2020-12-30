@@ -31,7 +31,7 @@ public class AccountServicesTest {
     @Autowired
     private AccountMapper accountMapper;
 
-    @Autowired
+    @Autowired(required = false)
     private AuthorityRepository authorityRepository;
 
     @Autowired
