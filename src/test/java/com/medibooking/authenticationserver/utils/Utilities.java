@@ -5,6 +5,7 @@ import com.medibooking.authenticationserver.dtos.account.AccountPostDto;
 import com.medibooking.authenticationserver.dtos.account.AccountPutDto;
 import com.medibooking.authenticationserver.dtos.auth.AuthGetDto;
 import com.medibooking.authenticationserver.dtos.auth.AuthPostDto;
+import com.medibooking.authenticationserver.entities.Account;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -19,6 +20,17 @@ public class Utilities {
         accountGetDto.setUsername(username);
         accountGetDto.setEncodedPassword(encodedPassword);
         return accountGetDto;
+    }
+
+    public Account buildAccount(Long id,
+                                 String username,
+                                 String encodedPassword) {
+
+        Account account = new Account();
+        account.setId(id);
+        account.setUsername(username);
+        account.setEncodedPassword(encodedPassword);
+        return account;
     }
 
     public AccountPostDto buildAccountPostDto(String username,
