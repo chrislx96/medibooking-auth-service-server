@@ -6,6 +6,7 @@ import com.medibooking.authenticationserver.dtos.account.AccountPutDto;
 import com.medibooking.authenticationserver.dtos.auth.AuthGetDto;
 import com.medibooking.authenticationserver.dtos.auth.AuthPostDto;
 import com.medibooking.authenticationserver.entities.Account;
+import com.medibooking.authenticationserver.entities.Authority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
@@ -63,4 +64,11 @@ public class Utilities {
         return authPostDto;
     }
 
+    public Authority buildAuthority(Long id,
+                                    String permission){
+        Authority authority=new Authority();
+        authority.setId(id);
+        authority.setPermission("permission");
+        return authority;
+    }
 }

@@ -2,6 +2,7 @@ package com.medibooking.authenticationserver.services;
 
 import com.medibooking.authenticationserver.dtos.account.AccountGetDto;
 import com.medibooking.authenticationserver.entities.Account;
+import com.medibooking.authenticationserver.entities.Authority;
 import com.medibooking.authenticationserver.mappers.*;
 import com.medibooking.authenticationserver.repositories.AccountRepository;
 import com.medibooking.authenticationserver.repositories.AuthorityRepository;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -73,6 +75,20 @@ public class AccountServicesTest {
         String returnedAccountUsername = accountService.findUsernameById(55L);
         assertNotNull(returnedAccountUsername);
         assertEquals("accName", returnedAccountUsername);
+    }
+
+    @Test
+    public void shouldReturnAuthorityGivenAccountId() {
+        Account account1 = utility.buildAccount(55L,"accName","sfd");
+        Authority authority1=utility.buildAuthority(66L,"allow");
+
+        account1.setAuthorities(Set.of(authority1));
+
+        when(accountRepository.getOne(55L)).thenReturn(account1);
+        Set<Authority> returnedAuthority = accountService.findAuthoritiesByAccountId(55L);
+
+        assertNotNull(returnedAuthority);
+        assertEquals(authority1, returnedAuthority.iterator().next());
     }
 
     @Test
