@@ -21,12 +21,13 @@
 
 * Application support H2 in-mem DB and Postgres DB, by default postgres DB is being used. If you want to use H2 in-mem DB, application-h2.properties shall be used.
 * Create an account
+* Change password
 * Login authentication
 * Given JWT token return user authorities
 
 ## How to run this application
 
-* Navigate the the root folder /wholesale under the command line
+* Navigate the the root folder under the command line
 * Run the command to build the whole project: **gradle clean build**
 
 ## How to access the spring boot restful application
