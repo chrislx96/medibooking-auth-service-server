@@ -34,6 +34,15 @@ public class Utilities {
         return account;
     }
 
+    public Account buildAccountWithoutId(String username,
+                                String encodedPassword) {
+
+        Account account = new Account();
+        account.setUsername(username);
+        account.setEncodedPassword(encodedPassword);
+        return account;
+    }
+
     public AccountPostDto buildAccountPostDto(String username,
                                               String encodedPassword){
         AccountPostDto accountPostDto = new AccountPostDto();
