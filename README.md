@@ -36,7 +36,7 @@
 
 ## Database structure
 
-![Database-strucutre](relative/path/to/auth-service-db-structure.jpg?raw=true "Database-strucutre")
+![Database-strucutre](auth-service-db-structure.jpg "Database-strucutre")
 
 ## Advantages of this application
 * Hibernate builds the entity layer to connect PostgreSQL database server
