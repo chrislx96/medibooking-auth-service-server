@@ -14,7 +14,8 @@
 ## Topics
 1. [How to run this application](#How-to-run-this-application)
 2. [How to access the spring boot restful application](#How-to-access-the-spring-boot-restful-application)
-3. [Advantages of this application](#Advantages-of-this-application)
+3. [Database structure](#Database-structure)
+4. [Advantages of this application](#Advantages-of-this-application)
 
 ### This is the springBoot based RESTful API. It supports the below functions:
 
@@ -30,8 +31,12 @@
 
 ## How to access the spring boot restful application
 ### Application by default provide 40 doctor users and 40 patient users, an example is provided below for both patient and doctor user:
-#### Doctor user example: username/password : doctor.Xu@gmail.com/password 
-#### Patient user example: username/password : patient.Jonathan@gmail.com/password (Only patient can make an appointment.)
+#### Doctor user example: username/password : doctor.Xu@gmail.com/password (Can access doctor user centre)
+#### Patient user example: username/password : patient.Jonathan@gmail.com/password (Only patient can make an appointment. & Can access patient user centre)
+
+## Database structure
+
+![Database-strucutre](relative/path/to/auth-service-db-structure.jpg?raw=true "Database-strucutre")
 
 ## Advantages of this application
 * Hibernate builds the entity layer to connect PostgreSQL database server
