@@ -1,4 +1,4 @@
-# Medibooking Authentication Mircroservice Server
+# Medibooking Authentication Service Server
 ## Tech Stack:
 * SpringBoot
 * Spring Security + JWT
