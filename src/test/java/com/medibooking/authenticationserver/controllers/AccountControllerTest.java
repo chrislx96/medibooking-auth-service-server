@@ -115,5 +115,4 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$.username").value("testAccount"))
                 .andExpect(jsonPath("$.encodedPassword").value("password"));
     }
-
 }

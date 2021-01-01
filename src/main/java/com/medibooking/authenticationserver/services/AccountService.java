@@ -6,12 +6,9 @@ import com.medibooking.authenticationserver.dtos.account.AccountPutDto;
 import com.medibooking.authenticationserver.entities.Account;
 import com.medibooking.authenticationserver.entities.Authority;
 import com.medibooking.authenticationserver.mappers.AccountMapper;
-import com.medibooking.messages.Patient;
 import com.medibooking.authenticationserver.repositories.AccountRepository;
 import com.medibooking.authenticationserver.repositories.AuthorityRepository;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,30 +24,12 @@ public class AccountService {
     private final AccountMapper accountMapper;
     private final AuthorityRepository authorityRepository;
 
-//    @Autowired
-//    RabbitTemplate rabbitTemplate;
-
     public AccountGetDto createPatientAccount(AccountPostDto accountPostDto){
         Account account = accountMapper.toEntity(accountPostDto);
         account.setAuthorities(getPatientAuthority());
         Account dbAccount = accountRepository.save(account);
-//        patientSignUp(dbAccount.getId(),
-//                accountPostDto.getFirstName(),
-//                accountPostDto.getLastName(),
-//                accountPostDto.getAge(),
-//                accountPostDto.getGender());
         return accountMapper.fromEntity(dbAccount);
     }
-
-//    public void patientSignUp(Long accountId, String firstName, String lastName, int age, String gender){
-//        Patient patient = new Patient();
-//        patient.setAccountId(accountId);
-//        patient.setFirstName(firstName);
-//        patient.setLastName(lastName);
-//        patient.setAge(age);
-//        patient.setGender(gender);
-//        rabbitTemplate.convertAndSend("PatientSignUp", patient);
-//    }
 
     public AccountGetDto findAccountByUsername(String username){
         Account account = accountRepository.findByUsername(username);

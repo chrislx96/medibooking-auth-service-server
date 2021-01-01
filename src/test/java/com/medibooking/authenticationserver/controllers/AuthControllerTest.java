@@ -1,6 +1,5 @@
 package com.medibooking.authenticationserver.controllers;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medibooking.authenticationserver.auth.ApplicationUserService;
 import com.medibooking.authenticationserver.dtos.account.AccountGetDto;
@@ -20,11 +19,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
 import javax.crypto.SecretKey;
-
-import java.util.List;
-
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,12 +58,10 @@ public class AuthControllerTest {
                 "test",
                 "test");
         BDDMockito.given(accountService.findAccountByUsername(anyString())).willReturn(accountGetDto);
-
         this.mockMvc.perform(post("/auth").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(authPostDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").exists());
     }
-
 }

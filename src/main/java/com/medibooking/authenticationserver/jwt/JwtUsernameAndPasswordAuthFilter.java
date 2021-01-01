@@ -27,7 +27,6 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
         try {
             AuthenticationRequest authenticationRequest = new ObjectMapper().readValue(request.getInputStream(), AuthenticationRequest.class);
             Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -42,7 +41,6 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-
         String jwtToken = Jwts.builder()
                 .setSubject(authResult.getName())
                 .claim("authorities", authResult.getAuthorities())
@@ -52,6 +50,5 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
                 .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + jwtToken);
-
     }
 }

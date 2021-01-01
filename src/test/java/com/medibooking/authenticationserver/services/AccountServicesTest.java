@@ -50,7 +50,6 @@ public class AccountServicesTest {
     public void shouldReturnAccountListGivenAccountsExist() {
         Account account1 = utility.buildAccount(55L,"accName","sfd");
         Account account2 = utility.buildAccount(555L,"accName","sfd");
-
         when(accountRepository.findAll()).thenReturn(List.of(account1, account2));
         List<AccountGetDto> returnedAccountList = accountService.getAllAccounts();
         assertNotNull(returnedAccountList);
@@ -60,7 +59,6 @@ public class AccountServicesTest {
     @Test
     public void shouldReturnAccountListGivenUsername() {
         Account account1 = utility.buildAccount(55L,"accName","sfd");
-
         when(accountRepository.findByUsername("accName")).thenReturn(account1);
         AccountGetDto returnedAccount = accountService.findAccountByUsername("accName");
         assertNotNull(returnedAccount);
@@ -70,7 +68,6 @@ public class AccountServicesTest {
     @Test
     public void shouldReturnAccountUsernameGivenId() {
         Account account1 = utility.buildAccount(55L,"accName","sfd");
-
         when(accountRepository.getOne(55L)).thenReturn(account1);
         String returnedAccountUsername = accountService.findUsernameById(55L);
         assertNotNull(returnedAccountUsername);
@@ -80,13 +77,10 @@ public class AccountServicesTest {
     @Test
     public void shouldReturnAuthorityGivenAccountId() {
         Account account1 = utility.buildAccount(55L,"accName","sfd");
-        Authority authority1=utility.buildAuthority(66L,"allow");
-
+        Authority authority1=utility.buildAuthority(66L,"ROLE_PATIENT");
         account1.setAuthorities(Set.of(authority1));
-
         when(accountRepository.getOne(55L)).thenReturn(account1);
         Set<Authority> returnedAuthority = accountService.findAuthoritiesByAccountId(55L);
-
         assertNotNull(returnedAuthority);
         assertEquals(authority1, returnedAuthority.iterator().next());
     }
@@ -96,11 +90,4 @@ public class AccountServicesTest {
         accountService.deleteAccount(306L);
         verify(accountRepository).deleteById(306L);
     }
-
-//    @Test
-//    public void shouldThrowExceptionGivenInvalidUsername() {
-//        when(accountRepository.findByUsername(any())).thenReturn(Optional.empty());
-//        assertThrows(InvalidAccountException.class,() -> accountService.findAccountByUsername(111));
-//    }
-
 }
